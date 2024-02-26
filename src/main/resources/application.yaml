@@ -1,0 +1,19 @@
+server:
+  port: 8080
+#  servlet:
+#    context-path: /api/v1
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:2345/postgres
+    password: postgres
+    username: postgres
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+
+    hibernate:
+      ddl-auto: update
