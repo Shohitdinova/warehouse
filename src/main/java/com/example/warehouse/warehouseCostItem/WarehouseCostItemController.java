@@ -14,17 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/warehouseCostItem")
 @RequiredArgsConstructor
+
 public class WarehouseCostItemController {
 
     @Autowired
-    private final WarehouseCostItemService warehouseOutputItemService;
+    private final WarehouseCostItemService warehouseCostItemService;
 
 
     @GetMapping
     public ResponseEntity<Page<WarehouseCostItemResponseDto>> getAll(Pageable pageable, @RequestParam(required = false) String predicate) {
-        Page<WarehouseCostItemResponseDto> all = warehouseOutputItemService.getAll(pageable, predicate);
+        Page<WarehouseCostItemResponseDto> all = warehouseCostItemService.getAll(pageable, predicate);
         return ResponseEntity.ok(all);
     }
+
+
+    @GetMapping("/daily-total-price")
+    public Double calculateDailyTotalPrice() {
+        return warehouseCostItemService.calculateDailyTotalPrice();
+    }
+
+
+    @GetMapping("/sum-expired-item-count")
+    public Double getSumExpiredItemCount() {
+        return warehouseCostItemService.sumExpiredItemCount();
+    }
+
 
 
 }

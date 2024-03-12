@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
-public class WarehouseCostItemDtoMapper extends GenericDtoMapper<WarehouseCostItem, WarehouseCostItemCreateDto,WarehouseCostItem, WarehouseCostItemResponseDto> {
+public class WarehouseCostItemDtoMapper extends GenericDtoMapper<WarehouseCostItem, WarehouseCostItemCreateDto, WarehouseCostItem, WarehouseCostItemResponseDto> {
    private final ModelMapper mapper;
 
     @Override

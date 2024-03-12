@@ -35,7 +35,7 @@ public class WarehouseCost extends AbsClass {
     @JoinColumn(name = "currancyType_id")
     private CurrencyType currancyType;
 
-    @OneToMany(mappedBy = "warehouseCost", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "warehouseCost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WarehouseCostItem> warehouseCostItemList = new ArrayList<>();
 
     @NotBlank

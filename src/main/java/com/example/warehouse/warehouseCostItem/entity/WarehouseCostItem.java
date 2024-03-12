@@ -20,7 +20,7 @@ public class WarehouseCostItem extends AbsClass {
     @JoinColumn(name = "product_id")
     private Product product_id;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private double count;
 
     @Column (nullable = false)
@@ -29,7 +29,7 @@ public class WarehouseCostItem extends AbsClass {
     private LocalDate expiryDate;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_cost_id")
+    @JoinColumn(name = "warehouse_cost_id", nullable = false)
     private WarehouseCost warehouseCost;
 
 

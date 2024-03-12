@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class WarehouseOutputItemCreateDto {
+public class WarehouseOutputItemDto {
 
-    private Long product;
+
+    private Long product_id;
 
     private double count;
 
-    private double product_price;
+    private double price;
+
+
 
 }

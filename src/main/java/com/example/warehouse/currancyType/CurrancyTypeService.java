@@ -26,8 +26,8 @@ public class CurrancyTypeService extends GenericCrudService<CurrencyType, Long, 
 
     @Override
     protected CurrencyType save(CurrancyTypeCreateDto createDto) {
-        CurrencyType currancyType = mapper.toEntity(createDto);
-        return repository.save(currancyType);
+        CurrencyType currencyType = mapper.toEntity(createDto);
+        return repository.save(currencyType);
     }
 
     @Override

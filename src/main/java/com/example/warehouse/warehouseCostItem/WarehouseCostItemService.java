@@ -3,9 +3,9 @@ package com.example.warehouse.warehouseCostItem;
 import com.example.warehouse.common.exception.CustomException;
 import com.example.warehouse.common.service.GenericCrudService;
 import com.example.warehouse.product.ProducteRepository;
-import com.example.warehouse.product.entity.Product;
 import com.example.warehouse.warehouseCost.WarehouseCostRepository;
 import com.example.warehouse.warehouseCost.dto.WarehouseCostCreateDto;
+import com.example.warehouse.warehouseCost.entity.WarehouseCost;
 import com.example.warehouse.warehouseCostItem.dto.WarehouseCostItemCreateDto;
 import com.example.warehouse.warehouseCostItem.dto.WarehouseCostItemResponseDto;
 import com.example.warehouse.warehouseCostItem.entity.WarehouseCostItem;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,39 +31,43 @@ public class WarehouseCostItemService extends GenericCrudService<WarehouseCostIt
     private final WarehouseCostRepository warehouseCostRepository;
 
 
-    public WarehouseCostItem save(WarehouseCostCreateDto createDto) {
-        WarehouseCostItem warehouseCostItem = new WarehouseCostItem();
 
-        for (WarehouseCostItemCreateDto costItem : createDto.getWarehouseCostItems()) {
-            if (costItem.getCount() < 1) {
-                throw new CustomException("It cannot be so");
-            } else {
-                warehouseCostItem.setCount(costItem.getCount());
-            }
-            if (costItem.getPrice() < 1) {
-                throw new CustomException("It cannot be so");
-            } else {
-                warehouseCostItem.setPrice(costItem.getPrice());
-            }
-            if (costItem.getExpiryDate().isBefore(LocalDate.now())){
-                throw new CustomException("This product is not for sale");
-            }else {
-                warehouseCostItem.setExpiryDate(costItem.getExpiryDate());
-            }
+    public List<WarehouseCostItem> saveWarehouseCostItems(WarehouseCostCreateDto itemsDto, WarehouseCost warehouseCost) {
 
+        List<WarehouseCostItem> savedItems = new ArrayList<>();
+        for (WarehouseCostItemCreateDto itemDto : itemsDto.getWarehouseCostItems()) {
 
-                warehouseCostItem.setPrice(costItem.getPrice());
-            Product product = producteRepository.findById(costItem.getProductId())
-                    .orElseThrow(() -> new CustomException("product not fount"));
+            WarehouseCostItem warehouseCostItem = new WarehouseCostItem();
+            warehouseCostItem.setProduct_id(producteRepository.findById(itemDto.getProductName())
+                    .orElseThrow(() -> new CustomException("Product not found")));
+            warehouseCostItem.setCount(itemDto.getCount());
+            warehouseCostItem.setPrice(itemDto.getPrice());
+            warehouseCostItem.setExpiryDate(itemDto.getExpiryDate());
+              warehouseCostItem.setWarehouseCost(warehouseCost);
 
-            warehouseCostItem.setProduct_id(product);
-
-            return repository.save(warehouseCostItem);
+            savedItems.add(repository.save(warehouseCostItem));
         }
-        return repository.save(warehouseCostItem);
 
+        return savedItems;
     }
 
+
+
+
+
+
+
+
+    public Double sumExpiredItemCount() {
+        return repository.sumExpiredItemCount();
+    }
+
+
+
+
+    public Double calculateDailyTotalPrice() {
+        return repository.calculateDailyTotalPrice();
+    }
 
     @Override
     protected WarehouseCostItem save(WarehouseCostItemCreateDto warehouseCostItemCreateDto) {
@@ -71,14 +75,12 @@ public class WarehouseCostItemService extends GenericCrudService<WarehouseCostIt
     }
 
     @Override
-    protected WarehouseCostItem updateEntity(WarehouseCostItem warehouseCostItem, WarehouseCostItem warehouseCostItem1) {
-        mapper.update(warehouseCostItem, warehouseCostItem1);
+    protected WarehouseCostItem updateEntity(WarehouseCostItem warehouseCostItem, WarehouseCostItem warehouseCostItem2) {
+        mapper.update(warehouseCostItem, warehouseCostItem2);
         return repository.save(warehouseCostItem);
     }
 
-    public List<WarehouseCostItem> getWarehouseCostItemsForDay(LocalDate date) {
-        return costRepository.findByDate(date);
-    }
+
 
 
 }

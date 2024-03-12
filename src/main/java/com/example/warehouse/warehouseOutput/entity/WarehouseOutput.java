@@ -31,23 +31,14 @@ public class WarehouseOutput extends AbsClass {
     @JoinColumn(name = "currancyType_id")
     private CurrencyType currancyType;
 
-    @OneToMany(mappedBy = "warehouseOutput", cascade = CascadeType.ALL)
-    private List<WarehouseOutputItem> warehouseOutputItemList= new ArrayList<>();
+    @OneToMany(mappedBy = "warehouseOutput", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<WarehouseOutputItem> warehouseOutputItems = new ArrayList<>();
 
     @NotBlank
     private String invoiceNumber;
 
     @NotBlank
     private String costCode;
-
-
-
-
-
-
-
-
-
 
 
 }

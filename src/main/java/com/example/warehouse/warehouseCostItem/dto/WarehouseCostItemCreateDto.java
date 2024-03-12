@@ -9,8 +9,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class WarehouseCostItemCreateDto {
-    private Long productId;
+public class WarehouseCostItemCreateDto
+{
+    private Long productName;
 
     private double count;
 

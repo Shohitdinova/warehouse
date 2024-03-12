@@ -15,9 +15,10 @@ public class WarehouseCostCreateDto {
     private LocalDate date;
     private Long warehouseId;
     private Long taminotchiId;
-    private List<WarehouseCostItemCreateDto> warehouseCostItems;
-    private Long currencyTypeId;
+    private Long  currencyType;
     private String costCode;
+    private List<WarehouseCostItemCreateDto> warehouseCostItems;
+
 
 
 

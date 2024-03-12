@@ -22,7 +22,7 @@ public class WarehouseOutputItem extends AbsClass {
     @Column (nullable = false)
     private double product_price;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_output_id")
     private WarehouseOutput warehouseOutput;
 
